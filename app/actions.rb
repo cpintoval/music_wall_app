@@ -1,5 +1,6 @@
 # Homepage (Root path)
 get '/' do
+  # @background_class = "wall"
   erb :index
 end
 
@@ -14,10 +15,17 @@ get '/songs/new' do
 end
 
 post '/songs' do
+  
+  if params[:url].empty?
+    url_var = "http://gadgtmag.com/media/uploads/2012/10/album-art-missing.png"
+  else
+    url_var = params[:url]
+  end
+
   @song = Song.new(
     title: params[:title],
     author: params[:author],
-    url: params[:url]
+    url: url_var
   )
   if @song.save
     redirect '/songs'

@@ -1,9 +1,22 @@
-<a href="/songs/new">Share your favorite song to the world... It's FREE (for now)!</a>
-<% @songs.each do |song| %>
-  <div class="song">
-    <h3><a href="/songs/<%= song.id %>"><%= song.title %></a> <small>(by: <%= song.author %>)</small></h3>
-    <p>
-      <%= song.url %>
-    </p>
+<div class="row">
+  <div class="col-md-10"></div>
+  <div class="col-md-1">
+    <a href="/songs/new" class="btn btn-success" role="button">Share a Song!</a>
   </div>
-<% end %>
+</div>
+
+<div class="row">
+  <% @songs.each do |song| %>
+    <div class="col-sm-4 col-md-2 post">
+      <div class="thumbnail">
+        <a href="/songs/<%= song.id %>" class="thumbnail">
+          <img src="<%= song.url %>">
+        </a>
+        <div class="caption">
+          <h4><%= song.title %></h4>
+          <p><%= song.author %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
