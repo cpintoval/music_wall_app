@@ -9,6 +9,7 @@ get '/songs' do
 end
 
 get '/songs/new' do
+  @song = Song.new
   erb :'songs/new'
 end
 
@@ -18,8 +19,11 @@ post '/songs' do
     author: params[:author],
     url: params[:url]
   )
-  @song.save
-  redirect '/songs'
+  if @song.save
+    redirect '/songs'
+  else
+    erb :'songs/new'
+  end
 end
 
 get '/songs/:id' do

@@ -1,15 +1,26 @@
+<% if @song.errors.any? %>
+  <div>
+    <strong>Some issues with your song, please fix them:</strong>
+    <ul>
+      <% @song.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <form method="post" action="/songs">
   <div>
     <label>Title:</label>
-    <input type="text" name="title">
+    <input type="text" name="title" value="<%= @song.title %>">
   </div>
   <div>
     <label>Author:</label>
-    <input type="text" name="author">
+    <input type="text" name="author" value="<%= @song.author %>">
   </div>
   <div>
-    <label>URL (Optional):</label>
-    <input type="text" name="url">
+    <label>URL (Optional, just to show the album image):</label>
+    <input type="text" name="url" value="<%= @song.url %>">
   </div>
   <div>
     <input type="submit" value="Submit">
