@@ -5,9 +5,9 @@
   </div>
 </div>
 
-<div class="row">
+<!-- <div class="row"> -->
   <% @songs.each do |song| %>
-    <div class="col-sm-4 col-md-2 post">
+    <div class="post">
       <div class="thumbnail">
         <a href="/songs/<%= song.id %>" class="thumbnail">
           <img src="<%= song.url %>">
@@ -19,4 +19,4 @@
       </div>
     </div>
   <% end %>
-</div>
+<!-- </div> -->

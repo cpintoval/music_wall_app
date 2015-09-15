@@ -38,3 +38,22 @@ get '/songs/:id' do
   @song = Song.find params[:id]
   erb :'songs/show'
 end
+
+get '/signup' do
+  @user = User.new
+  erb :'users/signup'
+end
+
+post '/signup' do
+  @user = User.new(
+    first_name: params[:firstname],
+    last_name: params[:lastname],
+    username: params[:username],
+    password: params[:password]
+  )
+  if @user.save
+    redirect '/songs'
+  else
+    erb :'users/signup'
+  end
+end
