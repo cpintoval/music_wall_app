@@ -17,9 +17,13 @@ body
   margin-top: 40px;
 }
 
-.post
-{
-  width: 15%;
-  height: 20%;
+.card {
+  width: 230px;
   display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+}
+
+.songs {
+  text-align: center;
 }

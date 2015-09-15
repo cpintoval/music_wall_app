@@ -3,10 +3,10 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <form class="navbar-form navbar-left" role="login">
+          <form class="navbar-form navbar-left" method="post" action="/session">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Username">
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="text" name="username" class="form-control" placeholder="Username">
+              <input type="password" name="password" class="form-control" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-default">Login</button>
           </form>
@@ -18,7 +18,7 @@
     <div class="jumbotron">
       <h1>Welcome to the Music Wall</h1>
       <p>Share your favorite songs, paste them on the Wall for the world to see them!</p>
-      <p><a class="btn btn-primary btn-lg" href="/signup" role="button">Sign Me Up!</a></p>
+      <p><a class="btn btn-primary btn-lg" href="/user/new" role="button">Sign Me Up!</a></p>
     </div>
   </div>
 </div>

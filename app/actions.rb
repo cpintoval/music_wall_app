@@ -1,50 +1,69 @@
 # Homepage (Root path)
+enable :sessions
+
 get '/' do
   # @background_class = "wall"
   erb :index
 end
 
 get '/songs' do
-  @songs = Song.all
-  erb :'songs/index'
+  if session[:user_id]
+    @user = User.find(session[:user_id])
+    @songs = Song.all
+    erb :'songs/index'
+  else
+    redirect '/'
+  end
 end
 
 get '/songs/new' do
-  @song = Song.new
-  erb :'songs/new'
+  if session[:user_id]
+    @song = Song.new
+    erb :'songs/new'
+  else
+    redirect '/'
+  end
 end
 
 post '/songs' do
   
-  if params[:url].empty?
-    url_var = "http://gadgtmag.com/media/uploads/2012/10/album-art-missing.png"
-  else
-    url_var = params[:url]
-  end
+  if session[:user_id]
+    if params[:url].empty?
+      url_var = "http://gadgtmag.com/media/uploads/2012/10/album-art-missing.png"
+    else
+      url_var = params[:url]
+    end
 
-  @song = Song.new(
-    title: params[:title],
-    author: params[:author],
-    url: url_var
-  )
-  if @song.save
-    redirect '/songs'
+    @song = Song.new(
+      title: params[:title],
+      author: params[:author],
+      url: url_var
+    )
+    if @song.save
+      redirect '/songs'
+    else
+      erb :'songs/new'
+    end
   else
-    erb :'songs/new'
+    redirect '/'
   end
 end
 
 get '/songs/:id' do
-  @song = Song.find params[:id]
-  erb :'songs/show'
+  if session[:user_id]
+    @song = Song.find params[:id]
+    erb :'songs/show'
+  else
+    redirect '/'
+  end
 end
 
-get '/signup' do
+get '/user/new' do
   @user = User.new
   erb :'users/signup'
 end
 
-post '/signup' do
+post '/user' do
   @user = User.new(
     first_name: params[:firstname],
     last_name: params[:lastname],
@@ -52,8 +71,24 @@ post '/signup' do
     password: params[:password]
   )
   if @user.save
+    session[:user_id] = @user.id
     redirect '/songs'
   else
     erb :'users/signup'
   end
+end
+
+post '/session' do
+  if @user = User.find_by(username: params[:username]).try(:authenticate, params[:password])
+    session[:user_id] = @user.id
+    redirect '/songs'
+  else
+    "bad login"
+    # Authentication Error
+  end
+end
+
+post '/logout' do 
+  session.delete(:user_id)
+  redirect '/'
 end
