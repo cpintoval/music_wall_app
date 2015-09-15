@@ -17,6 +17,11 @@ body
   margin-top: 40px;
 }
 
+.show-song {
+  margin-top: 40px;
+  text-align: center;
+}
+
 .card {
   width: 230px;
   display: inline-block;
@@ -26,4 +31,8 @@ body
 
 .songs {
   text-align: center;
+}
+
+.blankspace {
+  height: 50px;
 }

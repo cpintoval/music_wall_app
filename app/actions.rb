@@ -18,6 +18,7 @@ end
 
 get '/songs/new' do
   if session[:user_id]
+    @user = User.find(session[:user_id])
     @song = Song.new
     erb :'songs/new'
   else
@@ -28,6 +29,7 @@ end
 post '/songs' do
   
   if session[:user_id]
+    @user = User.find(session[:user_id])
     if params[:url].empty?
       url_var = "http://gadgtmag.com/media/uploads/2012/10/album-art-missing.png"
     else
@@ -37,7 +39,8 @@ post '/songs' do
     @song = Song.new(
       title: params[:title],
       author: params[:author],
-      url: url_var
+      url: url_var,
+      user_id: session[:user_id]
     )
     if @song.save
       redirect '/songs'
@@ -51,6 +54,7 @@ end
 
 get '/songs/:id' do
   if session[:user_id]
+    @user = User.find(session[:user_id])
     @song = Song.find params[:id]
     erb :'songs/show'
   else
@@ -91,4 +95,15 @@ end
 post '/logout' do 
   session.delete(:user_id)
   redirect '/'
+end
+
+post '/vote' do 
+  if session[:user_id]
+    @vote = Vote.create(
+      user_id: session[:user_id]
+      
+    )
+  else
+    "can't vote while not logged in"
+  end
 end

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -47,6 +47,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+<div class="blankspace"></div>
+
 <div class="songs">
   <% @songs.each do |song| %>
 <!--     <div class="col-sm-4 col-md-2">-->
@@ -58,6 +60,7 @@
         <div class="caption">
           <h4><%= song.title %></h4>
           <p><%= song.author %></p>
+          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> <%= Vote.where(song_id: song.id).count %> </span>
         </div>
       </div>
     </div>
